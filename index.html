@@ -63,7 +63,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>メタル計算</h1>
+        <h1>簡単な縦計算アプリ</h1>
         <div class="input-group">
             <label for="core">コアの数</label>
             <textarea id="core" placeholder="数値を改行で入力してください"></textarea>
@@ -79,35 +79,55 @@
             <textarea id="cadcam" placeholder="数値を改行で入力してください"></textarea>
             <div class="hint">例: 1.2[改行]0.7[改行]1.1</div>
         </div>
-        <button onclick="calculate()">合計を計算</button>
-        <div class="result">
-            コア: <span id="coreTotal">0</span><br>
-            クラウン: <span id="crownTotal">0</span><br>
-            CAD/CAM: <span id="cadcamTotal">0</span>
-        </div>
+        <button onclick="calculate()">計算</button>
+        <div class="result" id="resultContainer"></div>
     </div>
 
     <script>
         function calculate() {
-            // コアの合計を計算
-            const coreValues = document.getElementById("core").value.split('\n').map(Number).filter(num => !isNaN(num));
-            const coreSum = coreValues.reduce((acc, num) => acc + num, 0);
-            const coreTotal = coreSum + 0.2;
+            let resultHTML = '';
 
-            // クラウンの合計を計算
-            const crownValues = document.getElementById("crown").value.split('\n').map(Number).filter(num => !isNaN(num));
-            const crownSum = crownValues.reduce((acc, num) => acc + num, 0);
-            const crownTotal = crownSum + 0.4;
+            // コアの計算結果
+            const coreValues = document.getElementById("core").value.split('\n').map(Number).filter(num => !isNaN(num) && num !== 0);
+            if (coreValues.length > 0) {
+                let coreSum = 0;
+                resultHTML += '<h2>コアの結果</h2><ul>';
+                coreValues.forEach(num => {
+                    let result = num + 0.2;
+                    coreSum += result;
+                    resultHTML += `<li>${num} + 0.2 = ${result.toFixed(2)}</li>`;
+                });
+                resultHTML += `</ul><p>コアの合計: ${coreSum.toFixed(2)}</p>`;
+            }
 
-            // CAD/CAMの合計を計算
-            const cadcamValues = document.getElementById("cadcam").value.split('\n').map(Number).filter(num => !isNaN(num));
-            const cadcamSum = cadcamValues.reduce((acc, num) => acc + num, 0);
-            const cadcamTotal = cadcamSum + 0.5;
+            // クラウンの計算結果
+            const crownValues = document.getElementById("crown").value.split('\n').map(Number).filter(num => !isNaN(num) && num !== 0);
+            if (crownValues.length > 0) {
+                let crownSum = 0;
+                resultHTML += '<h2>クラウンの結果</h2><ul>';
+                crownValues.forEach(num => {
+                    let result = num + 0.4;
+                    crownSum += result;
+                    resultHTML += `<li>${num} + 0.4 = ${result.toFixed(2)}</li>`;
+                });
+                resultHTML += `</ul><p>クラウンの合計: ${crownSum.toFixed(2)}</p>`;
+            }
 
-            // 各項目の合計を表示
-            document.getElementById("coreTotal").innerText = coreTotal.toFixed(2);
-            document.getElementById("crownTotal").innerText = crownTotal.toFixed(2);
-            document.getElementById("cadcamTotal").innerText = cadcamTotal.toFixed(2);
+            // CAD/CAMの計算結果
+            const cadcamValues = document.getElementById("cadcam").value.split('\n').map(Number).filter(num => !isNaN(num) && num !== 0);
+            if (cadcamValues.length > 0) {
+                let cadcamSum = 0;
+                resultHTML += '<h2>CAD/CAMの結果</h2><ul>';
+                cadcamValues.forEach(num => {
+                    let result = num + 0.5;
+                    cadcamSum += result;
+                    resultHTML += `<li>${num} + 0.5 = ${result.toFixed(2)}</li>`;
+                });
+                resultHTML += `</ul><p>CAD/CAMの合計: ${cadcamSum.toFixed(2)}</p>`;
+            }
+
+            // 結果を表示
+            document.getElementById("resultContainer").innerHTML = resultHTML;
         }
     </script>
 </body>
