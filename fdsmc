@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>縦計算アプリ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 500px; /* iPadの画面に適した幅 */
+            margin: auto;
+        }
+        h1 {
+            font-size: 24px; /* 読みやすい大きめのタイトルフォント */
+            text-align: center;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-size: 18px; /* 大きなフォントで見やすく */
+            margin-bottom: 8px;
+        }
+        textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px; /* 入力がしやすいように大きめのフォント */
+            box-sizing: border-box;
+            height: 100px; /* 高さを増やし、入力が容易に */
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .hint {
+            font-size: 14px;
+            color: #777;
+            margin-top: -10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>簡単な縦計算アプリ</h1>
+        <div class="input-group">
+            <label for="core">コアの数</label>
+            <textarea id="core" placeholder="数値を改行で入力してください"></textarea>
+            <div class="hint">例: 0.2[改行]0.5[改行]0.6</div>
+        </div>
+        <div class="input-group">
+            <label for="crown">クラウンの数</label>
+            <textarea id="crown" placeholder="数値を改行で入力してください"></textarea>
+            <div class="hint">例: 1.0[改行]0.8[改行]0.9</div>
+        </div>
+        <div class="input-group">
+            <label for="cadcam">CAD/CAMの数</label>
+            <textarea id="cadcam" placeholder="数値を改行で入力してください"></textarea>
+            <div class="hint">例: 1.2[改行]0.7[改行]1.1</div>
+        </div>
+        <button onclick="calculate()">合計を計算</button>
+        <div class="result">
+            合計: <span id="total">0</span>
+        </div>
+    </div>
+
+    <script>
+        function calculate() {
+            // 各項目の入力値を改行で区切り、数値の配列に変換して合計
+            const coreValues = document.getElementById("core").value.split('\n').map(Number).filter(num => !isNaN(num));
+            const coreSum = coreValues.reduce((acc, num) => acc + num, 0);
+            const coreTotal = coreSum + 0.2;
+
+            const crownValues = document.getElementById("crown").value.split('\n').map(Number).filter(num => !isNaN(num));
+            const crownSum = crownValues.reduce((acc, num) => acc + num, 0);
+            const crownTotal = crownSum + 0.4;
+
+            const cadcamValues = document.getElementById("cadcam").value.split('\n').map(Number).filter(num => !isNaN(num));
+            const cadcamSum = cadcamValues.reduce((acc, num) => acc + num, 0);
+            const cadcamTotal = cadcamSum + 0.5;
+
+            // 合計を表示
+            const total = coreTotal + crownTotal + cadcamTotal;
+            document.getElementById("total").innerText = total.toFixed(2);
+        }
+    </script>
+</body>
+</html>
