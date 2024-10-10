@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>縦計算アプリ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+        }
+        h1 {
+            font-size: 24px;
+            text-align: center;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            box-sizing: border-box;
+            height: 100px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .hint {
+            font-size: 14px;
+            color: #777;
+            margin-top: -10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>簡単な縦計算アプリ</h1>
+        <div class="input-group">
+            <label for="core">コアの数</label>
+            <textarea id="core" placeholder="数値を改行で入力してください"></textarea>
+            <div class="hint">例: 0.2[改行]0.5[改行]0.6</div>
+        </div>
+        <div class="input-group">
+            <label for="crown">クラウンの数</label>
+            <textarea id="crown" placeholder="数値を改行で入力してください"></textarea>
+            <div class="hint">例: 1.0[改行]0.8[改行]0.9</div>
+        </div>
+        <div class="input-group">
+            <label for="cadcam">CAD/CAMの数</label>
+            <textarea id="cadcam" placeholder="数値を改行で入力してください"></textarea>
+            <div class="hint">例: 1.2[改行]0.7[改行]1.1</div>
+        </div>
+        <button onclick="calculate()">計算</button>
+        <div class="result" id="resultContainer"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            let resultHTML = '';
+
+            // コアの計算結果
+            const coreValues = document.getElementById("core").value.split('\n').map(Number).filter(num => !isNaN(num) && num !== 0);
+            if (coreValues.length > 0) {
+                let coreSum = 0;
+                resultHTML += '<h2>コアの結果</h2><ul>';
+                coreValues.forEach(num => {
+                    let result = num + 0.2;
+                    coreSum += result;
+                    resultHTML += `<li>${num} + 0.2 = ${result.toFixed(2)}</li>`;
+                });
+                resultHTML += `</ul><p>コアの合計: ${coreSum.toFixed(2)}</p>`;
+            }
+
+            // クラウンの計算結果
+            const crownValues = document.getElementById("crown").value.split('\n').map(Number).filter(num => !isNaN(num) && num !== 0);
+            if (crownValues.length > 0) {
+                let crownSum = 0;
+                resultHTML += '<h2>クラウンの結果</h2><ul>';
+                crownValues.forEach(num => {
+                    let result = num + 0.4;
+                    crownSum += result;
+                    resultHTML += `<li>${num} + 0.4 = ${result.toFixed(2)}</li>`;
+                });
+                resultHTML += `</ul><p>クラウンの合計: ${crownSum.toFixed(2)}</p>`;
+            }
+
+            // CAD/CAMの計算結果
+            const cadcamValues = document.getElementById("cadcam").value.split('\n').map(Number).filter(num => !isNaN(num) && num !== 0);
+            if (cadcamValues.length > 0) {
+                let cadcamSum = 0;
+                resultHTML += '<h2>CAD/CAMの結果</h2><ul>';
+                cadcamValues.forEach(num => {
+                    let result = num + 0.5;
+                    cadcamSum += result;
+                    resultHTML += `<li>${num} + 0.5 = ${result.toFixed(2)}</li>`;
+                });
+                resultHTML += `</ul><p>CAD/CAMの合計: ${cadcamSum.toFixed(2)}</p>`;
+            }
+
+            // 結果を表示
+            document.getElementById("resultContainer").innerHTML = resultHTML;
+        }
+    </script>
+</body>
+</html>
