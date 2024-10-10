@@ -10,11 +10,11 @@
             margin: 20px;
         }
         .container {
-            max-width: 500px; /* iPadの画面に適した幅 */
+            max-width: 500px;
             margin: auto;
         }
         h1 {
-            font-size: 24px; /* 読みやすい大きめのタイトルフォント */
+            font-size: 24px;
             text-align: center;
         }
         .input-group {
@@ -22,15 +22,15 @@
         }
         label {
             display: block;
-            font-size: 18px; /* 大きなフォントで見やすく */
+            font-size: 18px;
             margin-bottom: 8px;
         }
         textarea {
             width: 100%;
             padding: 12px;
-            font-size: 18px; /* 入力がしやすいように大きめのフォント */
+            font-size: 18px;
             box-sizing: border-box;
-            height: 100px; /* 高さを増やし、入力が容易に */
+            height: 100px;
             border: 2px solid #ccc;
             border-radius: 5px;
         }
@@ -63,7 +63,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>簡単な縦計算アプリ</h1>
+        <h1>メタル計算</h1>
         <div class="input-group">
             <label for="core">コアの数</label>
             <textarea id="core" placeholder="数値を改行で入力してください"></textarea>
@@ -81,28 +81,33 @@
         </div>
         <button onclick="calculate()">合計を計算</button>
         <div class="result">
-            合計: <span id="total">0</span>
+            コア: <span id="coreTotal">0</span><br>
+            クラウン: <span id="crownTotal">0</span><br>
+            CAD/CAM: <span id="cadcamTotal">0</span>
         </div>
     </div>
 
     <script>
         function calculate() {
-            // 各項目の入力値を改行で区切り、数値の配列に変換して合計
+            // コアの合計を計算
             const coreValues = document.getElementById("core").value.split('\n').map(Number).filter(num => !isNaN(num));
             const coreSum = coreValues.reduce((acc, num) => acc + num, 0);
             const coreTotal = coreSum + 0.2;
 
+            // クラウンの合計を計算
             const crownValues = document.getElementById("crown").value.split('\n').map(Number).filter(num => !isNaN(num));
             const crownSum = crownValues.reduce((acc, num) => acc + num, 0);
             const crownTotal = crownSum + 0.4;
 
+            // CAD/CAMの合計を計算
             const cadcamValues = document.getElementById("cadcam").value.split('\n').map(Number).filter(num => !isNaN(num));
             const cadcamSum = cadcamValues.reduce((acc, num) => acc + num, 0);
             const cadcamTotal = cadcamSum + 0.5;
 
-            // 合計を表示
-            const total = coreTotal + crownTotal + cadcamTotal;
-            document.getElementById("total").innerText = total.toFixed(2);
+            // 各項目の合計を表示
+            document.getElementById("coreTotal").innerText = coreTotal.toFixed(2);
+            document.getElementById("crownTotal").innerText = crownTotal.toFixed(2);
+            document.getElementById("cadcamTotal").innerText = cadcamTotal.toFixed(2);
         }
     </script>
 </body>
